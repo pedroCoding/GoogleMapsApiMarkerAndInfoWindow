@@ -2,27 +2,24 @@
 let map;
 
 async function initMap() {
-  // The location of Uluru
-  const position = { lat: -6.349281683941345, lng: -39.31058685926957 };
-  // Request needed libraries.
-  //@ts-ignore
-  const { Map } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
 
-  // The map, centered at Uluru
+  const { Map } = await google.maps.importLibrary("maps");
+
+  //FUNÇÃO CARREGA O MAPA E CENTRALIZA NA POSIÇÃO CENTER
   map = new Map(document.getElementById("map"), {
-    zoom: 18,
-    center: position,
+    zoom: 18, //APROXIMA O MAPA DA POSIÇÃO ABAIXO
+    center: { lat: -6.349281683941345, lng: -39.31058685926957 },
     mapId: "DEMO_MAP_ID",
   });
 
-  // The marker, positioned at Uluru
+  //TAG PARA MARCADOR
   const marker = new google.maps.Marker({
-    position: { lat: -6.349281683941345, lng: -39.31058685926957 }  ,
+    position: { lat: -6.349281683941345, lng: -39.31058685926957 }, //Posição do marcador!
     map,
-    title: "Uluru (Ayers Rock)",
+    title: "Uluru (Ayers Rock)",  //Titulo do marcador
   });
 
+  //TEXTO DO MARCADOR
   const contentString =
     '<div id="content">' +
     '<div id="siteNotice">' +
@@ -44,12 +41,16 @@ async function initMap() {
     "(last visited June 22, 2009).</p>" +
     "</div>" +
     "</div>";
+
+
+  //CHAMA A FUNÇÃO ACIMA QUE CONTEM O TEXTO
   const infowindow = new google.maps.InfoWindow({
     content: contentString,
     ariaLabel: "Uluru",
   });
   
 
+  //FUNÇÃO PARA QUE AO CLICAR NO MARCADOR, EXIBA O TEXTO
   marker.addListener("click", () => {
     infowindow.open({
       anchor: marker,
